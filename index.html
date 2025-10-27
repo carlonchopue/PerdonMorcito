@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perdon-bebe</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        background: linear-gradient(45deg, #000, #f00, #000);
+        background-size: 300% 300%;
+        animation: gradientMove 6s ease infinite;
+        box-shadow: inset 0 0 200px rgba(0, 0, 0, .9);
+    }
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(40px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-element {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s ease, transform 1s ease;
+    }
+    .fade-element.visible {
+        opacity: 1;
+        transform: translateY(0);
+        animation: fadeInUp 1s ease forwards;
+    }
+
+    .hero, .quotes {
+        text-align: center;
+        color: #fff;
+        text-shadow: 2px 2px 10px rgba(255, 0, 0, .8);
+        padding: 100px 20px;
+    }
+
+    /* 📸 Contenedor de imágenes centradas */
+    .carousel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 60px;
+        width: 100%;
+        margin: 50px auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Cada imagen envuelta y centrada */
+    .heartbeat-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* 💓 Imágenes con borde blanco, brillo y animación de latido */
+    .carousel img {
+        display: block;
+        margin: auto;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 25px;
+        border: 3px solid rgba(255, 255, 255, 0.9);
+        box-shadow:
+            0 0 20px rgba(255, 255, 255, 0.9),
+            0 0 40px rgba(255, 0, 0, 0.7),
+            0 0 80px rgba(255, 0, 0, 0.4);
+        animation: heartbeat 1.5s ease-in-out infinite;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* ✨ Efecto al pasar el mouse */
+    .carousel img:hover {
+        transform: scale(1.08);
+        box-shadow:
+            0 0 40px rgba(255, 255, 255, 1),
+            0 0 80px rgba(255, 0, 0, 1),
+            0 0 120px rgba(255, 0, 0, 0.8);
+    }
+
+    /* ❤️ Latido suave y constante */
+    @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        15% { transform: scale(1.08); }
+        30% { transform: scale(0.97); }
+        45% { transform: scale(1.1); }
+        60% { transform: scale(0.98); }
+        75% { transform: scale(1.05); }
+    }
+
+    .music-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(255, 0, 0, .7);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        transition: .3s;
+    }
+    .music-control:hover {
+        transform: scale(1.1);
+        background: rgba(255, 50, 50, .9);
+    }
+
+    /* ❤️ Corazones flotantes rojos grandes */
+    .heart {
+        position: fixed;
+        bottom: -60px;
+        color: #ff0000;
+        font-size: 40px;
+        opacity: 0.9;
+        animation: floatUp 6s linear infinite;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) translateX(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-110vh) translateX(var(--moveX)) scale(var(--scale));
+            opacity: 0;
+        }
+    }
+
+    /* 💌 Sección de perdón */
+    .forgive-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        margin: 80px 0;
+        position: relative;
+        height: 150px;
+    }
+
+    .no-btn {
+        background: #444;
+        color: #fff;
+        border: none;
+        padding: 20px 40px;
+        font-size: 1.5em;
+        border-radius: 40px;
+        cursor: pointer;
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+        position: absolute;
+        transition: 0.3s;
+    }
+
+    .no-btn:hover {
+        background: #222;
+    }
+
+    .forgive-btn {
+        padding: 20px 40px;
+        background: #f00;
+        color: #fff;
+        font-size: 1.5em;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        box-shadow: 0 0 30px rgba(255, 0, 0, .7);
+        transition: .3s;
+    }
+
+    .forgive-btn:hover {
+        transform: scale(1.1);
+        background: #ff4b2b;
+        box-shadow: 0 0 50px rgba(255, 0, 0, 1);
+    }
+</style>
+</head>
+<body>
+
+    <div class="quotes">
+  <h3 class="fade-element">INSTRUCCIONES</h3>
+  <p class="fade-element">Ya te la sabes pero mejor te lo repito</p>
+  <p class="fade-element">1. Haz click en el botón "Reproducir música"</p>
+  <p class="fade-element">2. Desliza hacia abajo lentamente y déjate llevar...</p>
+  <p class="fade-element">3. al final veras dos botone de disculpa asle click y sigue bajando, cuidalo mucho shi ... mua</p>
+</div>
+
+<div class="hero">
+  <h1 class="fade-element">💔 Perdóname, mi amor 💔</h1>
+  <h2 class="fade-element">Sé que discutimos...</h2>
+  <h3 class="fade-element">Pero no quiero perderte.</h3>
+  <p class="fade-element">Porque tú eres mi todo 🫶</p>
+</div>
+
+
+
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/imagen1.jpg" alt="">
+  </div>
+
+  <div class="quotes">
+    <h1 class="fade-element">No quiero que esto sea solo una disculpa...</h1>
+    <h1 class="fade-element">Quiero que sea una promesa de hacerlo mejor 🫶</h1>
+  </div>
+
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/imagen2.jpg" alt="">
+  </div>
+
+  <div class="quotes">
+    <h1 class="fade-element">Porque nada tiene sentido si no estás bien conmigo 💔</h1>
+  </div>
+
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/imagen3.jpg" alt="">
+  </div>
+
+  <div class="quotes">
+    <h1 class="fade-element">Te amoooooooooooooooooooooooooo amor 💖</h1>
+  </div>
+</div>
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/imagen4.jpg" alt="">
+  </div>
+</div>
+
+<div class="quotes">
+  <h1 class="fade-element">A veces el orgullo nos gana, pero mi corazón siempre vuelve a ti. 💔</h1>
+</div>
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/imagen5.jpg" alt="">
+  </div>
+</div>
+
+<div class="quotes">
+  <h1 class="fade-element">No quiero más días sin tus palabras ni tus risas.💖</h1>
+</div>
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/michi1.jpg" alt="">
+  </div>
+</div>
+
+<div class="quotes">
+  <h1 class="fade-element">Me duele saber que te hice daño, y daría todo por borrar ese momento. 😿😿</h1>
+</div>
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/michi2.jpg" alt="">
+  </div>
+</div>
+
+<div class="quotes">
+  <h1 class="fade-element">Porque sin ti, todo pierde color, en mi corazon. 🩶🖤</h1>
+</div>
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/michi3.jpg" alt="">
+  </div>
+</div>
+
+<div class="quotes">
+  <h1 class="fade-element">Eres la calma después de mi tormenta, y no pienso perderte. 💗💝💘</h1>
+</div>
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/michi4.jpg" alt="">
+  </div>
+</div>
+
+<div class="quotes">
+  <h1 class="fade-element">No quiero demostrarte amor con palabras, sino con cada detalle. 😽😽</h1>
+</div>
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/michi5.jpg" alt="">
+  </div>
+</div>
+
+<div class="quotes">
+  <h1 class="fade-element">Porque tú y yo... no somos un error, solo una historia que aún se está escribiendo. ❤️‍👩‍❤️‍👨❤️‍🩹</h1>
+</div>
+
+<div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/michi6.jpg" alt="">
+  </div>
+</div>
+
+<!-- 💌 Sección de perdón -->
+<div class="forgive-section fade-element">
+  <button class="forgive-btn" onclick="showForgiveMessage()">Sí, te perdono 💞</button>
+  <br>
+  <button class="no-btn" onmouseover="moveNoButton()" onclick="playFunnySound()">No te perdono 💔</button>
+</div>
+
+<div id="forgiveMessage" class="quotes fade-element" style="display:none;">
+    <h1> Sabia que si me perdonarias mua 😁😁❤️❤️❤️❤️</h1>
+  <h1>🥺 Gracias por perdonarme ❤️</h1>
+  <h2>No sabes cuánto vale eso para mí... Prometo cuidar de ti y de nosotros 🫶</h2>
+  <div class="carousel">
+  <div class="heartbeat-wrapper fade-element">
+    <img src="img/michi7.jpg" alt="">
+  </div>
+
+</div>
+
+</div>
+
+<!-- 🎵 Música de fondo -->
+<audio id="bg-music" src="music/musica.mp3" loop></audio>
+<div class="music-control" onclick="toggleMusic()">🎵 Reproducir Música</div>
+
+<!-- 🔊 Sonido gracioso -->
+<audio id="funny-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7f1dd96e6d.mp3?filename=cartoon-jump-6462.mp3"></audio>
+
+<script>
+function toggleMusic(){
+  const m=document.getElementById('bg-music');
+  const c=document.querySelector('.music-control');
+  if(m.paused){m.play();c.textContent='🎵 Pausar Música';}
+  else{m.pause();c.textContent='🎵 Reproducir Música';}
+}
+
+/* ❤️ Crear corazones flotantes */
+function crearCorazones(count){
+  for(let i=0;i<count;i++){
+    const heart=document.createElement('div');
+    heart.classList.add('heart');
+    heart.textContent='❤️';
+    heart.style.left=Math.random()*100+'vw';
+    const size=35+Math.random()*45;
+    heart.style.fontSize=size+'px';
+    const moveX=(Math.random()*200-100)+'px';
+    const scale=1+Math.random()*0.8;
+    heart.style.setProperty('--moveX',moveX);
+    heart.style.setProperty('--scale',scale);
+    heart.style.animationDuration=(4+Math.random()*3)+'s';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),7000);
+  }
+}
+setInterval(()=>crearCorazones(3),800);
+
+function showForgiveMessage(){
+  const msg=document.getElementById('forgiveMessage');
+  msg.style.display='block';
+  crearCorazones(60);
+}
+
+function moveNoButton(){
+  const btn=document.querySelector('.no-btn');
+  const section=document.querySelector('.forgive-section');
+  const rect=section.getBoundingClientRect();
+  const maxX=rect.width-btn.offsetWidth;
+  const maxY=rect.height-btn.offsetHeight;
+  const randomX=Math.random()*maxX;
+  const randomY=Math.random()*maxY;
+  btn.style.left=`${randomX}px`;
+  btn.style.top=`${randomY}px`;
+  playFunnySound();
+  shakeScreen();
+}
+
+function playFunnySound(){
+  const s=document.getElementById('funny-sound');
+  s.currentTime=0;
+  s.play();
+}
+
+function shakeScreen(){
+  document.body.style.transition='transform 0.1s';
+  document.body.style.transform='translate(5px,5px)';
+  setTimeout(()=>{
+    document.body.style.transform='translate(-5px,-5px)';
+    setTimeout(()=>{document.body.style.transform='translate(0,0)';},100);
+  },100);
+}
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.2});
+
+document.querySelectorAll('.fade-element').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
+
+
